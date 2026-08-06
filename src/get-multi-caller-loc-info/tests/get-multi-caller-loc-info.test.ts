@@ -9,7 +9,7 @@ import {
   getMultiCallerLocInfoHandlerErr,
 } from './msw-handlers.js';
 
-describe('Get Loc Info By IP', () => {
+describe('Get Multi Caller LOC Info', () => {
   let fetchSpy: jest.SpiedFunction<typeof global.fetch>;
   let mswServer: ReturnType<typeof createMSWMockServer>;
 
