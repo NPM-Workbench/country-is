@@ -4,6 +4,7 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
+    "types": ["jest", "msw"],
     "rootDir": "src",
     "outDir": "dist",
     "declaration": true,
