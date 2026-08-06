@@ -3,11 +3,11 @@ import { API_ROOT } from "../shared/index.js";
 import type { TAPIRes, TFields } from "../types/index.js";
 
 /* types */
-type TGetCallerLocInfo = TAPIRes & {
+type TGetCallerLocInfoRes = TAPIRes & {
   payload: Record<string, any> | null
 };
 type TInput = { fields: "default" | TFields[] };
-type TOutput = TGetCallerLocInfo;
+type TOutput = TGetCallerLocInfoRes;
 
 /* module */
 async function getCallerLocInfo(props: TInput): Promise<TOutput> {
@@ -44,5 +44,5 @@ async function getCallerLocInfo(props: TInput): Promise<TOutput> {
 }
 
 /* exports */
-export type { TGetCallerLocInfo };
+export type { TGetCallerLocInfoRes };
 export { getCallerLocInfo };
