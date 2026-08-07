@@ -27,7 +27,7 @@ npm install country-is
 ### 🔤 Example Usage
 
 1. 📁 **Get Package Info**:<br/>
-Fetches service metadata and package details from the API with zero config overhead
+   Fetches service metadata and package details from the API with zero config overhead
 
 ```typescript
 /* node modules */
@@ -46,7 +46,7 @@ await myFunc();
 ```
 
 2. 📁 **Get Caller Location Info**<br/>
- Returns caller IP-based location info with opt field selection for tailored payload.
+   Returns caller IP-based location info with optional field selection for a tailored payload.
 
 ```typescript
 /* node modules */
@@ -54,7 +54,12 @@ import { getCallerLocInfo } from 'country-is';
 
 async function myFunc() {
   try {
-    const response = await getCallerLocInfo({ fields: 'default' });
+    /*
+      fields: can be either = "default"
+      or an array of atleast one: ['city', 'continent', 'subdivision', 'postal', 'location', 'asn'] 
+    */
+
+    const response = await getCallerLocInfo({ fields: 'default' }); // use 'default' or an array of predefined fields
     console.log(response);
   } catch (error) {
     console.error('Failed to get caller location info:', error);
@@ -65,7 +70,7 @@ await myFunc();
 ```
 
 3. 📁 **Get Location Info by IP**<br/>
-Fetches location data for a given IP and supports optional fields to limit the payload data.
+   Fetches location data for a given IP and supports optional fields to limit the payload data.
 
 ```typescript
 /* node modules */
@@ -73,6 +78,11 @@ import { getLocInfoByIP } from 'country-is';
 
 async function myFunc() {
   try {
+    /*
+      fields: can be either = "default"
+      or an array of atleast one: ['city', 'continent', 'subdivision', 'postal', 'location', 'asn'] 
+    */
+
     const response = await getLocInfoByIP({
       ip: '1.1.1.1',
       fields: ['continent', 'asn'],
@@ -87,7 +97,7 @@ await myFunc();
 ```
 
 4. 📁 **Get Location Info for Multiple IPs**<br/>
-Submits a batch of IP addresses to Country.is and returns location payloads with optional fields.
+   Submits a batch of IP addresses to Country.is and returns location payloads with optional fields.
 
 ```typescript
 /* node modules */
@@ -95,6 +105,11 @@ import { getMultiCallerLocInfo } from 'country-is';
 
 async function myFunc() {
   try {
+    /*
+      fields: can be either = "default"
+      or an array of atleast one: ['city', 'continent', 'subdivision', 'postal', 'location', 'asn'] 
+    */
+
     const response = await getMultiCallerLocInfo({
       ips: ['1.1.1.1', '2.2.2.2'],
       fields: ['continent', 'asn'],
