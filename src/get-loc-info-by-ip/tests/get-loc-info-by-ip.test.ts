@@ -1,5 +1,13 @@
 /* node modules */
-import { jest } from '@jest/globals';
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  describe,
+  expect,
+  jest,
+  test,
+} from '@jest/globals';
 
 /* app imports */
 import createMSWMockServer from '../../shared/msw-mock-server.js';
@@ -9,8 +17,9 @@ import {
   getLocInfoByIPHandlerErr,
 } from './msw-handlers.js';
 
+/* suite */
 describe('Get Loc Info By IP', () => {
-  let fetchSpy: jest.SpiedFunction<typeof global.fetch>;
+  let fetchSpy: jest.SpiedFunction<typeof global.fetch> | undefined;
   let mswServer: ReturnType<typeof createMSWMockServer>;
 
   /* life-cycle */
@@ -20,7 +29,7 @@ describe('Get Loc Info By IP', () => {
   });
   afterEach(() => {
     mswServer.resetHandlers();
-    fetchSpy.mockRestore();
+    fetchSpy?.mockRestore();
   });
   afterAll(() => mswServer.close());
 
@@ -57,6 +66,25 @@ describe('Get Loc Info By IP', () => {
   });
 
   /* 3 */
+  test('throws an error when the ip address is empty', async () => {
+    fetchSpy = jest.spyOn(global, 'fetch');
+    await expect(getLocInfoByIP({ ip: '', fields: 'default' })).rejects.toThrow(
+      "[Bad Req]: Get Loc Info By IP - Mandatory 'ip' field needs to have IPv4 or IPv6 address details",
+    );
+  });
+
+  /* 4 */
+  test('sends the expected GET request for a specific IP', async () => {
+    fetchSpy = jest.spyOn(global, 'fetch');
+    await getLocInfoByIP({ ip: '1.1.1.1', fields: 'default' });
+
+    expect(fetchSpy).toHaveBeenCalledWith(
+      expect.stringContaining('/1.1.1.1'),
+      expect.objectContaining({ method: 'GET' }),
+    );
+  });
+
+  /* 5 */
   test('returns an error response for a non-ok HTTP response', async () => {
     /* setup */
     fetchSpy = jest.spyOn(global, 'fetch');

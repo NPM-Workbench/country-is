@@ -9,6 +9,7 @@ import {
   getCountryIsInfoHandlerErr,
 } from './msw-handlers.js';
 
+/* suite */
 describe('Get CountryIs Info', () => {
   let fetchSpy: jest.SpiedFunction<typeof global.fetch>;
   let mswServer: ReturnType<typeof createMSWMockServer>;
@@ -41,6 +42,18 @@ describe('Get CountryIs Info', () => {
   });
 
   /* 2 */
+  test('calls the info endpoint with a GET request', async () => {
+    /* setup */
+    fetchSpy = jest.spyOn(global, 'fetch');
+    await getCountryIsInfo();
+
+    expect(fetchSpy).toHaveBeenCalledWith(
+      expect.stringContaining('/info'),
+      expect.objectContaining({ method: 'GET' }),
+    );
+  });
+
+  /* 3 */
   test('returns a failed response payload for a non-ok response', async () => {
     /* setup */
     fetchSpy = jest.spyOn(global, 'fetch');
