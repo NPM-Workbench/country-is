@@ -1,4 +1,4 @@
-![Banner](https://github.com/user-attachments/assets/551d86a9-9e5d-439c-98db-c9ccd1336af1)
+![Banner](https://github.com/user-attachments/assets/0d8a5cc7-7c8e-4969-9b01-11dd225a34dd)
 ![npm](https://img.shields.io/npm/v/country-is)
 ![downloads](https://img.shields.io/npm/dw/country-is)
 ![license](https://img.shields.io/npm/l/country-is)
@@ -26,7 +26,8 @@ npm install country-is
 
 ### 🔤 Example Usage
 
-1. 📁 Get Package Info
+1. 📁 **Get Package Info**:<br/>
+Fetches service metadata and package details from the API with zero config overhead
 
 ```typescript
 /* node modules */
@@ -44,7 +45,8 @@ async function myFunc() {
 await myFunc();
 ```
 
-2. 📁 Get Caller Location Info
+2. 📁 **Get Caller Location Info**<br/>
+ Returns caller IP-based location info with opt field selection for tailored payload.
 
 ```typescript
 /* node modules */
@@ -62,7 +64,8 @@ async function myFunc() {
 await myFunc();
 ```
 
-3. 📁 Get Location Info by IP
+3. 📁 **Get Location Info by IP**<br/>
+Fetches location data for a given IP and supports optional fields to limit the payload data.
 
 ```typescript
 /* node modules */
@@ -83,7 +86,8 @@ async function myFunc() {
 await myFunc();
 ```
 
-4. 📁 Get Location Info for Multiple IPs
+4. 📁 **Get Location Info for Multiple IPs**<br/>
+Submits a batch of IP addresses to Country.is and returns location payloads with optional fields.
 
 ```typescript
 /* node modules */
@@ -168,8 +172,7 @@ Snapshots:   0 total
 
 ### 📘 Contributing
 
-Contributions, suggestions, and improvements are welcome. <br/>
-Feel free to open issues or pull requests.
+Contributions, suggestions, and improvements are welcome. Feel free to open issues or pull requests.
 
 ### 🔒 Security & Privacy
 
