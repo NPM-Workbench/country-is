@@ -1,5 +1,13 @@
 /* node modules */
-import { jest, test } from '@jest/globals';
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  describe,
+  expect,
+  jest,
+  test,
+} from '@jest/globals';
 
 /* app imports */
 import createMSWMockServer from '../../shared/msw-mock-server.js';
@@ -9,8 +17,9 @@ import {
   getMultiCallerLocInfoHandlerErr,
 } from './msw-handlers.js';
 
+/* suite */
 describe('Get Multi Caller LOC Info', () => {
-  let fetchSpy: jest.SpiedFunction<typeof global.fetch>;
+  let fetchSpy: jest.SpiedFunction<typeof global.fetch> | undefined;
   let mswServer: ReturnType<typeof createMSWMockServer>;
 
   /* life-cycle */
@@ -20,7 +29,7 @@ describe('Get Multi Caller LOC Info', () => {
   });
   afterEach(() => {
     mswServer.resetHandlers();
-    fetchSpy.mockRestore();
+    fetchSpy?.mockRestore();
   });
   afterAll(() => mswServer.close());
 
@@ -71,6 +80,37 @@ describe('Get Multi Caller LOC Info', () => {
   });
 
   /* 3 */
+  test('throws an error when the ips array is empty', async () => {
+    fetchSpy = jest.spyOn(global, 'fetch');
+
+    await expect(
+      getMultiCallerLocInfo({ ips: [], fields: 'default' }),
+    ).rejects.toThrow(
+      '[Bad Req]: Get Multi Caller Loc Info - IPs array cannot be empty',
+    );
+  });
+
+  /* 4 */
+  test('sends the expected POST request body and headers', async () => {
+    fetchSpy = jest.spyOn(global, 'fetch');
+    await getMultiCallerLocInfo({
+      ips: ['1.1.1.1', '2.2.2.2'],
+      fields: 'default',
+    });
+
+    expect(fetchSpy).toHaveBeenCalledWith(
+      expect.stringContaining('/'),
+      expect.objectContaining({
+        method: 'POST',
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+        }),
+        body: JSON.stringify(['1.1.1.1', '2.2.2.2']),
+      }),
+    );
+  });
+
+  /* 5 */
   test('returns an error response for a non-ok HTTP response', async () => {
     /* setup */
     fetchSpy = jest.spyOn(global, 'fetch');
