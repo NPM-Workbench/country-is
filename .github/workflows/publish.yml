@@ -3,7 +3,6 @@ name: Publish Package
 
 # trigger
 on:
-  workflow_dispatch: 
   release:
     types: [published]
 
